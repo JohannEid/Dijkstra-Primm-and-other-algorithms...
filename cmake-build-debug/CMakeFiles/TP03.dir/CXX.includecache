@@ -1,0 +1,52 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/johann/Work/TP Informatique/TP03/Edges.cpp
+Edges.h
+/home/johann/Work/TP Informatique/TP03/Edges.h
+
+/home/johann/Work/TP Informatique/TP03/Edges.h
+Header.h
+/home/johann/Work/TP Informatique/TP03/Header.h
+Summit.h
+/home/johann/Work/TP Informatique/TP03/Summit.h
+
+/home/johann/Work/TP Informatique/TP03/Graph.cpp
+Graph.h
+/home/johann/Work/TP Informatique/TP03/Graph.h
+
+/home/johann/Work/TP Informatique/TP03/Graph.h
+Header.h
+/home/johann/Work/TP Informatique/TP03/Header.h
+Summit.h
+/home/johann/Work/TP Informatique/TP03/Summit.h
+Edges.h
+/home/johann/Work/TP Informatique/TP03/Edges.h
+
+/home/johann/Work/TP Informatique/TP03/Header.h
+bits/stdtr1c++.h
+/home/johann/Work/TP Informatique/TP03/bits/stdtr1c++.h
+
+/home/johann/Work/TP Informatique/TP03/Summit.cpp
+Summit.h
+/home/johann/Work/TP Informatique/TP03/Summit.h
+
+/home/johann/Work/TP Informatique/TP03/Summit.h
+
+/home/johann/Work/TP Informatique/TP03/main.cpp
+iostream
+-
+vector
+-
+Graph.h
+/home/johann/Work/TP Informatique/TP03/Graph.h
+Edges.h
+/home/johann/Work/TP Informatique/TP03/Edges.h
+Summit.h
+/home/johann/Work/TP Informatique/TP03/Summit.h
+
