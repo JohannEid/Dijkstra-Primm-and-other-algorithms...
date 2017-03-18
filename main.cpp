@@ -7,8 +7,23 @@
 
 int main() {
     Graph a;
+    a.display();
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     std::list<Edges> list_of_edge;
-    std::set<Edges,bool(*)(const Edges&,const Edges& )>i_edges(compareEdges);
+
 
     i_edges.insert(Edges(std::make_pair(Summit(1),Summit(2)),5));
     i_edges.insert(Edges(std::make_pair(Summit(3),Summit(4)),1));
@@ -20,8 +35,7 @@ int main() {
     for(auto& elem : i_edges){ list_of_edge.push_back(elem); }
     a.solveKruskal(list_of_edge);
     a.display();
-
-
+*/
 
 
 

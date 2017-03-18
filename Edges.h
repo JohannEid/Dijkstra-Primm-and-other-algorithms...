@@ -38,8 +38,6 @@ public:
      else {m_summits.second.setUnion(uni_to_set);}
    }
 };
-inline bool compareEdges (const Edges& lhs, const Edges& rhs){
-    return lhs < rhs;
-}
+
 
 #endif //TP03_EDGES_H
