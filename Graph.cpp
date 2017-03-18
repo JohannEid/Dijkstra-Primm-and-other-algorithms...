@@ -16,23 +16,25 @@ void Graph::readFromFile() {
     std::ifstream myfile("source.txt");
     if (myfile.is_open()) {
         while (myfile >> value) {
-            if (compteur == 0) { setOrder(value); }
-            else if (compteur == 1) { setNumber_of_edges(value); }
-            else if (compteur > getNumber_of_edges() * 2 + getOrder() + 2) { break; }
+            ++compteur;
+
+            if (compteur == 1) { setOrder(value); }
+            else if (compteur == 2) { setNumber_of_edges(value); }
+            else if (compteur > getNumber_of_edges() * 2 + getOrder() + 3) { break; }
             else if (((compteur - 2) % 3 == 0) && (compteur > 2)) {
-                m_edges_collection.insert(Edges(std::make_pair(Summit(temporary_values[0]),
-                                                               Summit(temporary_values[1])),
-                                                temporary_values[2]));
+                temporary_values.push_back(value);
+                m_edges_collection.insert(Edges(std::make_pair(Summit(temporary_values[(compteur - 5)]),
+                                                               Summit(temporary_values[(compteur - 4)])),
+                                                temporary_values[compteur - 3]));
 
             } else {
                 temporary_values.push_back(value);
             }
-            ++compteur;
         }
         myfile.close();
+
+
     } else { std::cout << "Couldn't open file" << std::endl; }
-
-
 }
 
 void Graph::solveKruskal(std::list<Edges> &list_of_edge) {
