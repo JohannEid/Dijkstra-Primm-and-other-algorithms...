@@ -7,6 +7,8 @@
 
 int main() {
     Graph a;
+    a.solveKruskal();
+    a.solvePrimm();
     a.display();
 
 

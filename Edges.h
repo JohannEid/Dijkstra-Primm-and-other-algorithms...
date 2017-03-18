@@ -12,9 +12,9 @@
 class Edges {
 
     int m_value;
-    std::pair<Summit,Summit> m_summits;
 
 public:
+    mutable std::pair<Summit,Summit> m_summits;
 
     Edges(const std::pair<Summit,Summit> &summits, int value)
             : m_value(value),m_summits(summits)
@@ -26,7 +26,7 @@ public:
         return m_value < rhs.m_value;
     }
 
-      const std::pair<Summit, Summit> &getSummits() const  {
+       const std::pair<Summit, Summit> &getSummits() const   {
         return m_summits;
     }
 

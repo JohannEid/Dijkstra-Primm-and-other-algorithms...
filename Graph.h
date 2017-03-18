@@ -16,9 +16,12 @@ private:
     int m_number_of_edges;
     std::vector<Edges> m_edges;
     std::set<Edges> m_edges_collection;
+    std::set<Edges> m_smallest_weight_tree;
+    std::set<Edges> m_primm_algorithms;
 
     void readFromFile();
-    void solveUnions(Edges &to_unite, std::list<Edges> &i_edges);
+    void solveUnions(const Edges &to_unite);
+    void display_graph(std::set<Edges>& to_display);
 
 
 public:
@@ -27,7 +30,9 @@ public:
 
     void display();
 
-    void solveKruskal(std::list<Edges> &list_of_edge);
+    void solveKruskal();
+
+    void solvePrimm();
 
     void addEdges(const Edges &edge_to_add) { m_edges.push_back(edge_to_add); }
 
@@ -47,6 +52,11 @@ public:
         Graph::m_number_of_edges = number_of_edges;
     }
 
+    const std::set<Edges> &getM_edges_collection() const {
+        return m_edges_collection;
+    }
+
+    bool isVisited(const std::vector<int>& check_in,const int& to_check);
 
 };
 

@@ -9,9 +9,10 @@
 class Summit {
 private:
     int m_id;
-    int m_union;
+    mutable int m_union;
+    mutable bool visited = false;
 public:
-    Summit(int id) : m_id(id),m_union(id) {}
+    Summit(int id) : m_id(id), m_union(id) {}
 
     int getId() const {
         return m_id;
@@ -27,6 +28,14 @@ public:
 
     void setUnion(int m_union) {
         Summit::m_union = m_union;
+    }
+
+    bool isVisited() const {
+        return visited;
+    }
+
+    void setVisited(bool visited) {
+        Summit::visited = visited;
     }
 
 
