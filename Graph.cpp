@@ -4,9 +4,6 @@
 
 #include "Graph.h"
 
-Graph::Graph() {
-    readFromFile();
-}
 
 void Graph::readFromFile() {
     int compteur{0};
@@ -104,4 +101,89 @@ bool Graph::isVisited(const std::vector<int> &check_in, const int &to_check) {
         return false;
     }
 }
+
+void Graph::displayAdjacency(std::vector<std::vector<int>> &to_dispaly) {
+    for (int i{0}; i < to_dispaly.size(); ++i) {
+        for (int j{0}; j < to_dispaly.size(); ++j) {
+            std::cout << to_dispaly[i][j];
+        }
+        std::cout << std::endl;
+    }
+
+}
+
+
+void Graph::readFromFileAdjacency() {
+    int value{0};
+    int compteur{0};
+    std::ifstream myfile("adjacency.txt");
+    std::vector<int> line;
+    std::vector<std::vector<int>> adjacency_matrix;
+
+    if (myfile.is_open()) {
+        while (myfile >> value) {
+            if (compteur == 0) { setOrder(value); }
+            else if (compteur % getOrder() != 0) { line.push_back(value); }
+            else if (compteur % getOrder() == 0) {
+                line.push_back(value);
+                adjacency_matrix.push_back(line);
+                line.clear();
+            }
+
+
+            ++compteur;
+
+        }
+    } else { std::cout << "Couldn't open file" << std::endl; }
+    myfile.close();
+    for (int i{0}; i < getOrder(); ++i) {
+        for (int j{0}; j < getOrder(); ++j) {
+            m_adjacency_set.insert(Edges(std::make_pair(Summit(i), Summit(j)), adjacency_matrix[i][j]));
+        }
+    }
+    // displayAdjacency(adjacency_matrix);
+}
+
+void Graph::solveDijkstra() {
+    int distance = 0;
+    int source{1};
+    std::vector<int> is_visited_id;
+    int id_lhs{0};
+    int id_rhs{0};
+    bool end{false};
+
+    is_visited_id.push_back(source);
+
+    while (!end) {
+        for (auto &elem : m_adjacency_set) {
+            id_lhs = elem.getSummits().first.getId();
+            id_rhs = elem.getSummits().second.getId();
+
+            if ((id_lhs == source) && (!isVisited
+                    (is_visited_id, id_rhs))) {
+                is_visited_id.push_back(id_rhs);
+                distance += elem.getValue();
+                source = id_rhs;
+            } else if ((id_rhs == source) && (!isVisited
+                    (is_visited_id, id_lhs))) {
+                is_visited_id.push_back(id_lhs);
+                distance += elem.getValue();
+                source = id_lhs;
+            } else { end = true; }
+        }
+
+    }
+    std::cout << distance;
+    for (const auto &elem : is_visited_id) {
+        std::cout << "Visited: " << elem << ",";
+    }
+}
+
+
+
+
+
+
+
+
 

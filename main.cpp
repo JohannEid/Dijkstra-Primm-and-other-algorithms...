@@ -7,9 +7,14 @@
 
 int main() {
     Graph a;
+    /*
+    a.readFromFile();
     a.solveKruskal();
     a.solvePrimm();
     a.display();
+     */
+    a.readFromFileAdjacency();
+    a.solveDijkstra();
 
 
 

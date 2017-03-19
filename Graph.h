@@ -18,15 +18,16 @@ private:
     std::set<Edges> m_edges_collection;
     std::set<Edges> m_smallest_weight_tree;
     std::set<Edges> m_primm_algorithms;
+    std::set<Edges> m_adjacency_set;
 
-    void readFromFile();
     void solveUnions(const Edges &to_unite);
     void display_graph(std::set<Edges>& to_display);
 
 
 public:
 
-    Graph();
+
+    void displayAdjacency(std::vector<std::vector<int>>& to_dispaly);
 
     void display();
 
@@ -34,7 +35,9 @@ public:
 
     void solvePrimm();
 
-    void addEdges(const Edges &edge_to_add) { m_edges.push_back(edge_to_add); }
+    void solveDijkstra();
+
+    void readFromFile();
 
     int getOrder() const {
         return m_order;
@@ -55,6 +58,8 @@ public:
     const std::set<Edges> &getM_edges_collection() const {
         return m_edges_collection;
     }
+
+    void readFromFileAdjacency();
 
     bool isVisited(const std::vector<int>& check_in,const int& to_check);
 
