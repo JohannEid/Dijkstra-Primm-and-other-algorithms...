@@ -18,11 +18,11 @@ private:
     std::set<Edges> m_edges_collection;
     std::set<Edges> m_smallest_weight_tree;
     std::set<Edges> m_primm_algorithms;
-    std::vector<std::vector<int>> m_adjacency_matrix;
 
 
     void solveUnions(const Edges &to_unite);
     void display_graph(std::set<Edges>& to_display);
+    void create_summit_collection();
 
 
 public:
@@ -66,7 +66,7 @@ public:
         return m_summits;
     }
 
-    void readFromFileAdjacency();
+    std::vector<std::vector<int >>  readFromFileAdjacency();
 
     bool isVisited(const std::vector<int>& check_in,const int& to_check);
 

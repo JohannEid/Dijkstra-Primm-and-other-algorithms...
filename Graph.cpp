@@ -103,7 +103,7 @@ bool Graph::isVisited(const std::vector<int> &check_in, const int &to_check) {
 }
 
 
-void Graph::readFromFileAdjacency() {
+std::vector<std::vector<int >> Graph::readFromFileAdjacency() {
     int value{0};
     int compteur{0};
     std::ifstream myfile("adjacency.txt");
@@ -116,7 +116,7 @@ void Graph::readFromFileAdjacency() {
             else if (compteur % getOrder() != 0) { line.push_back(value); }
             else if (compteur % getOrder() == 0) {
                 line.push_back(value);
-                m_adjacency_matrix.push_back(line);
+                adjacency_matrix.push_back(line);
                 line.clear();
             }
 
@@ -126,18 +126,18 @@ void Graph::readFromFileAdjacency() {
         }
     } else { std::cout << "Couldn't open file" << std::endl; }
     myfile.close();
-    for (int i{0}; i < getOrder(); ++i) {
-        m_summits.push_back(Summit(i));
-    }
-    // displayAdjacency(adjacency_matrix);
+
+    return adjacency_matrix;
 }
 
 void Graph::solveDijkstra() {
 
+    std::vector<std::vector<int>> adjacency_matrix = readFromFileAdjacency();
     std::priority_queue<Summit *, std::vector<Summit *>, std::greater<Summit *>> priority_queue;
     int weight{0};
     int source_id{0};
     int distance{0};
+    create_summit_collection();
 
 
     for (int i{0}; i < getOrder(); ++i) {
@@ -149,7 +149,7 @@ void Graph::solveDijkstra() {
         source_id = priority_queue.top()->getId();
 
         for (int i{0}; i < getOrder(); ++i) {
-            distance = m_adjacency_matrix[source_id][i];
+            distance = adjacency_matrix[source_id][i];
             weight = distance + m_summits[source_id].getWeight();
             if ((distance > 0) && (!m_summits[i].isVisited()) &&
                 ((weight < m_summits[i].getWeight()) ||
@@ -164,8 +164,15 @@ void Graph::solveDijkstra() {
 }
 
 void Graph::display_dijkstra() {
-    for(const auto& elem: getM_summits()){
-        std::cout<<"Summit is : "<<elem.getId()<<"its shortest path is "<< elem.getWeight()<<std::endl;
+    for (const auto &elem: getM_summits()) {
+        std::cout << "Summit is : " << elem.getId() << "its shortest path is " << elem.getWeight() << std::endl;
+    }
+
+}
+
+void Graph::create_summit_collection() {
+    for (int i{0}; i < getOrder(); ++i) {
+        m_summits.push_back(Summit(i));
     }
 
 }
