@@ -14,11 +14,12 @@ class Graph {
 private:
     int m_order;
     int m_number_of_edges;
-    std::vector<Edges> m_edges;
+    std::vector<Summit> m_summits;
     std::set<Edges> m_edges_collection;
     std::set<Edges> m_smallest_weight_tree;
     std::set<Edges> m_primm_algorithms;
-    std::set<Edges> m_adjacency_set;
+    std::vector<std::vector<int>> m_adjacency_matrix;
+
 
     void solveUnions(const Edges &to_unite);
     void display_graph(std::set<Edges>& to_display);
@@ -27,15 +28,17 @@ private:
 public:
 
 
-    void displayAdjacency(std::vector<std::vector<int>>& to_dispaly);
+
 
     void display();
+
+    void display_dijkstra();
 
     void solveKruskal();
 
     void solvePrimm();
 
-    void solveDijkstra();
+    void solveDijkstra() ;
 
     void readFromFile();
 
@@ -59,9 +62,15 @@ public:
         return m_edges_collection;
     }
 
+    const std::vector<Summit> &getM_summits() const {
+        return m_summits;
+    }
+
     void readFromFileAdjacency();
 
     bool isVisited(const std::vector<int>& check_in,const int& to_check);
+
+
 
 };
 
