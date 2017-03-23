@@ -9,11 +9,12 @@ int main() {
     Graph a;
 
 
-    //a.solveKruskal();
-    a.solveKruskal();
-    a.display_kruskal();
+    a.solvePrimm();
+    a.display_primm();
 
 /*
+  a.solveKruskal();
+    a.display_kruskal();
     a.readFromFileAdjacency();
     a.solveDijkstra();
     a.display_dijkstra();
