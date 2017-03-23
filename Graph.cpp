@@ -16,13 +16,14 @@ std::multiset<Edges> Graph::readFromFile() {
         while (myfile >> value) {
             ++compteur;
 
-            if (compteur == 1) { setOrder(value);
-                                 create_summit_collection();}
-            else if (compteur == 2) { setNumber_of_edges(value); }
+            if (compteur == 1) {
+                setOrder(value);
+                create_summit_collection();
+            } else if (compteur == 2) { setNumber_of_edges(value); }
             else if (((compteur - 2) % 3 == 0) && (compteur > 2)) {
                 temporary_values.push_back(value);
-                edges_collection.insert(Edges(std::make_pair(Summit(temporary_values[(compteur - 5)]),
-                                                             Summit(temporary_values[(compteur - 4)])),
+                edges_collection.insert(Edges(std::make_pair(&m_summits[temporary_values[compteur - 5]],
+                                                             &m_summits[temporary_values[compteur - 4]]),
                                               temporary_values[compteur - 3]));
 
             } else {
@@ -41,7 +42,7 @@ void Graph::solveKruskal() {
     std::multiset<Edges> edges_collection = readFromFile();
 
     for (auto &elem : edges_collection) {
-        if (elem.getSummits().first.getUnion() != elem.getSummits().second.getUnion())
+        if (elem.getSummits().first->getUnion() != elem.getSummits().second->getUnion())
             m_smallest_weight_tree.push_back(elem);
         solveUnions(elem, edges_collection);
 
@@ -49,54 +50,49 @@ void Graph::solveKruskal() {
 }
 
 void Graph::solveUnions(const Edges &to_unite, std::multiset<Edges> &edges_collection) {
-    int uni_lhs{to_unite.getSummits().first.getUnion()};
-    int uni_rhs{to_unite.getSummits().second.getUnion()};
+    int uni_lhs{to_unite.getSummits().first->getUnion()};
+    int uni_rhs{to_unite.getSummits().second->getUnion()};
 
     for (auto &elem : edges_collection) {
-        if (elem.getSummits().first.getUnion() == uni_rhs) { elem.m_summits.first.setUnion(uni_lhs); }
-        else if (elem.getSummits().second.getUnion() == uni_rhs) {
-            elem.m_summits.second.setUnion(uni_lhs);
+        if (elem.getSummits().first->getUnion() == uni_rhs) { elem.m_summits.first->setUnion(uni_lhs); }
+        else if (elem.getSummits().second->getUnion() == uni_rhs) {
+            elem.m_summits.second->setUnion(uni_lhs);
         }
     }
 }
 
 
 void Graph::solvePrimm() {
-    std::vector<int> is_visited_id;
     std::multiset<Edges> edges_collection = readFromFile();
 
-    is_visited_id.push_back(m_primm_algorithms.begin()->m_summits.first.getId());
-    for (auto &elem : edges_collection) {
-        if ((isVisited(is_visited_id, elem.getSummits().first.getId())) &&
-            (!isVisited(is_visited_id, elem.getSummits().second.getId()))) {
-            m_primm_algorithms.push_back(elem);
-            is_visited_id.push_back(elem.m_summits.second.getId());
-        } else if ((isVisited(is_visited_id, elem.getSummits().second.getId())) &&
-                   (!isVisited(is_visited_id, elem.getSummits().first.getId()))) {
-            m_primm_algorithms.push_back(elem);
-            is_visited_id.push_back(elem.m_summits.first.getId());
-        }
+    edges_collection.begin()->getSummits().first->setVisited(true);
+    while (get_visited_summits() < getOrder() - 1) {
+        for (auto &elem : edges_collection) {
+            if ((elem.getSummits().first->isVisited()) &&
+                (!elem.getSummits().second->isVisited())) {
+                m_primm_algorithms.push_back(elem);
+                elem.getSummits().second->setVisited(true);
+                increment_visited_summits();
+            } else if ((elem.getSummits().second->isVisited()) &&
+                       (!elem.getSummits().first->isVisited())) {
+                m_primm_algorithms.push_back(elem);
+                elem.getSummits().first->setVisited(true);
+                increment_visited_summits();
 
+            }
+        }
     }
+
 }
 
 void Graph::display_graph(std::vector<Edges> &to_display) {
     for (const auto &elem : to_display) {
-        std::cout << elem.getSummits().first.getId() << " ";
-        std::cout << elem.getSummits().second.getId() << " ";
+        std::cout << elem.getSummits().first->getId() << " ";
+        std::cout << elem.getSummits().second->getId() << " ";
         std::cout << elem.getValue() << std::endl;
     }
 
 }
-
-bool Graph::isVisited(const std::vector<int> &check_in, const int &to_check) {
-    if (std::find(check_in.begin(), check_in.end(), to_check) != check_in.end()) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 
 std::vector<std::vector<int >> Graph::readFromFileAdjacency() {
     int value{0};
@@ -175,62 +171,13 @@ void Graph::create_summit_collection() {
 
 void Graph::display_primm() {
     std::cout << "PRIMM ALGORITHM" << std::endl;
-//    display_graph(m_primm_algorithms);
+    display_graph(m_primm_algorithms);
 }
 
 void Graph::display_kruskal() {
     std::cout << "KRUSKAL ALGORITHM" << std::endl;
     display_graph(m_smallest_weight_tree);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-int distance {0};
-int source{0};
-std::vector<int>is_visited_id;
-int id_lhs{0};
-int id_rhs{0};
-is_visited_id.push_back(source);
-
-for(const auto& elem : m_adjacency_set){
-std::cout<< elem.getSummits().first.getId() <<" "<<elem.getSummits().second.getId()<<std::endl;
-std::cout << elem.getValue()<<std::endl;}
-while (!sources.empty()){
-for (auto &elem : m_adjacency_set) {
-
-    id_lhs = elem.getSummits().first.getId();
-    id_rhs = elem.getSummits().second.getId();
-
-    if ((id_lhs == source) && (!isVisited
-            (is_visited_id, id_rhs))) {
-        is_visited_id.push_back(id_rhs);
-        distance += elem.getValue();
-        source = id_rhs;
-    } else if ((id_rhs == source) && (!isVisited
-            (is_visited_id, id_lhs))) {
-        is_visited_id.push_back(id_lhs);
-        distance += elem.getValue();
-        source = id_lhs;
-        sources.push(source);
-    }
-}
-
-}
-*/
-
-
-
-
 
 
 

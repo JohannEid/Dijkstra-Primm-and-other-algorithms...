@@ -26,7 +26,7 @@ public:
         return m_value < rhs.m_value;
     }
 
-    const std::pair<Summit *, Summit *> &getM_summits() const {
+    const std::pair<Summit *, Summit *> &getSummits() const {
         return m_summits;
     }
 

@@ -12,8 +12,9 @@
 class Graph {
 
 private:
-    int m_order;
-    int m_number_of_edges;
+    int m_order = 0;
+    int m_number_of_edges = 0;
+    int m_visited_summits = 0;
     std::vector<Summit> m_summits;
     std::vector<Edges> m_primm_algorithms;
     std::vector<Edges> m_smallest_weight_tree;
@@ -66,13 +67,12 @@ public:
         return m_summits;
     }
 
+    int get_visited_summits() const {
+        return m_visited_summits;
+    }
 
-
-
-    bool isVisited(const std::vector<int>& check_in,const int& to_check);
-
-
-
+    void increment_visited_summits() {
+    ++m_visited_summits;    }
 };
 
 
