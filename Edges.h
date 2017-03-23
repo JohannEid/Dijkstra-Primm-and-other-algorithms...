@@ -14,9 +14,9 @@ class Edges {
     int m_value;
 
 public:
-    mutable std::pair<Summit,Summit> m_summits;
+    mutable std::pair<Summit*,Summit*> m_summits;
 
-    Edges(const std::pair<Summit,Summit> &summits, int value)
+    Edges(const std::pair<Summit*,Summit*> &summits, int value)
             : m_value(value),m_summits(summits)
     {}
 
@@ -26,7 +26,7 @@ public:
         return m_value < rhs.m_value;
     }
 
-       const std::pair<Summit, Summit> &getSummits() const   {
+    const std::pair<Summit *, Summit *> &getM_summits() const {
         return m_summits;
     }
 
@@ -34,8 +34,8 @@ public:
         return m_value;
     }
    void setUnion(bool isFirst, int uni_to_set){
-     if(isFirst) {m_summits.first.setUnion(uni_to_set);}
-     else {m_summits.second.setUnion(uni_to_set);}
+     if(isFirst) {m_summits.first->setUnion(uni_to_set);}
+     else {m_summits.second->setUnion(uni_to_set);}
    }
 };
 

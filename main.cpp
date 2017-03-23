@@ -8,17 +8,16 @@
 int main() {
     Graph a;
 
-    /*
-    a.readFromFile();
-    a.solveKruskal();
-    a.solvePrimm();
-    a.display();
-*/
 
+    //a.solveKruskal();
+    a.solveKruskal();
+    a.display_kruskal();
+
+/*
     a.readFromFileAdjacency();
     a.solveDijkstra();
     a.display_dijkstra();
-
+*/
 
 
 

@@ -15,24 +15,29 @@ private:
     int m_order;
     int m_number_of_edges;
     std::vector<Summit> m_summits;
-    std::set<Edges> m_edges_collection;
-    std::set<Edges> m_smallest_weight_tree;
-    std::set<Edges> m_primm_algorithms;
+    std::vector<Edges> m_primm_algorithms;
+    std::vector<Edges> m_smallest_weight_tree;
 
 
-    void solveUnions(const Edges &to_unite);
-    void display_graph(std::set<Edges>& to_display);
+
+    void solveUnions(const Edges &to_unite,std::multiset<Edges>& edges_collection);
+    void display_graph(std::vector<Edges>& to_display);
     void create_summit_collection();
+    std::vector<std::vector<int >>  readFromFileAdjacency();
+    std::multiset<Edges> readFromFile();
+
+
 
 
 public:
 
-
-
-
     void display();
 
     void display_dijkstra();
+
+    void display_primm ();
+
+    void display_kruskal();
 
     void solveKruskal();
 
@@ -40,7 +45,6 @@ public:
 
     void solveDijkstra() ;
 
-    void readFromFile();
 
     int getOrder() const {
         return m_order;
@@ -58,15 +62,12 @@ public:
         Graph::m_number_of_edges = number_of_edges;
     }
 
-    const std::set<Edges> &getM_edges_collection() const {
-        return m_edges_collection;
-    }
-
     const std::vector<Summit> &getM_summits() const {
         return m_summits;
     }
 
-    std::vector<std::vector<int >>  readFromFileAdjacency();
+
+
 
     bool isVisited(const std::vector<int>& check_in,const int& to_check);
 
