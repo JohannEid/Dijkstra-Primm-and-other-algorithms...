@@ -179,8 +179,71 @@ void Graph::display_kruskal() {
     display_graph(m_smallest_weight_tree);
 }
 
+void Graph::save_to_file(const std::string &file_name) {
+    std::ofstream my_file;
+    my_file.open(file_name);
+    try {
+        if (file_name == "primm.txt") {
+            save_graph(m_primm_algorithms, file_name);
+        } else if (file_name == "kruskal.txt") {
+            save_graph(m_smallest_weight_tree, file_name);
+        } else if (file_name == "dijkstra.txt") {
+            for (const auto &elem: getM_summits()) {
+                my_file << "Summit is : " << elem.getId()
+                        << "its shortest path is " << elem.getWeight() << std::endl;
+            }
+        } else {
+            throw std::domain_error("wrong input file_name ");
+        }
+    }
+    catch (std::exception const &e) {
+        std::cerr << "Erreur" << e.what() << std::endl;
+    }
+}
 
 
+void menu_choice(Graph &graph) {
+    std::string ichoice{" "};
+    int choice{0};
 
+    while (true) {
+        std::cout << "Please enter" << std::endl << "1.Kruskal" << std::endl << "2.Primm" << std::endl
+                  << "3.Dijkstra" << std::endl << "4.Quit" << std::endl;
+        try {
 
+            std::cin >> ichoice;
+            choice = std::stoi(ichoice);
+            if (choice == 1) {
+                graph.solveKruskal();
+                graph.display_kruskal();
+            } else if (choice == 2) {
+                graph.solvePrimm();
+                graph.display_primm();
 
+            } else if (choice == 3) {
+                graph.solveDijkstra();
+                graph.display_dijkstra();
+            } else if (choice == 4) {
+                break;
+            } else {
+                throw std::domain_error("Invalid choice ");
+
+            }
+        }
+        catch (std::exception const &e) {
+            std::cerr << "Erreur" << e.what() << std::endl;
+        }
+
+    }
+}
+
+void Graph::save_graph(std::vector<Edges> &to_display, const std::string &file_name) {
+    std::ofstream my_file;
+    my_file.open(file_name);
+
+    for (const auto &elem : to_display) {
+        my_file << elem.getSummits().first->getId() << " ";
+        my_file << elem.getSummits().second->getId() << " ";
+        my_file << elem.getValue() << std::endl;
+    }
+}

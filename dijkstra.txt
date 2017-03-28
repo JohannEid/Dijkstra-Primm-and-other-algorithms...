@@ -1,0 +1,8 @@
+DIJKSTRA
+Summit is : 0its shortest path is 0
+Summit is : 1its shortest path is 6
+Summit is : 2its shortest path is 3
+Summit is : 3its shortest path is 4
+Summit is : 4its shortest path is 10
+Summit is : 5its shortest path is 4
+Summit is : 6its shortest path is 11

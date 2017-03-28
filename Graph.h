@@ -26,13 +26,15 @@ private:
     void create_summit_collection();
     std::vector<std::vector<int >>  readFromFileAdjacency();
     std::multiset<Edges> readFromFile();
+    void save_graph(std::vector<Edges>& to_display,const std::string& file_name);
+
 
 
 
 
 public:
 
-    void display();
+
 
     void display_dijkstra();
 
@@ -45,6 +47,8 @@ public:
     void solvePrimm();
 
     void solveDijkstra() ;
+
+    void save_to_file(const std::string& file_name);
 
 
     int getOrder() const {
@@ -74,6 +78,8 @@ public:
     void increment_visited_summits() {
     ++m_visited_summits;    }
 };
+
+void menu_choice(Graph& graph);
 
 
 #endif //TP03_GRAPH_H
